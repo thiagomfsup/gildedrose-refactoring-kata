@@ -12,7 +12,7 @@ public class NormalItemTest {
         // given
         var overdueFooItem = new Item("foo", 0, 5);
         var overdueBarItem = new Item("bar", -1, 5);
-        GildedRose gildedRose = new GildedRose(new Item[] { overdueFooItem, overdueBarItem });
+        GildedRose gildedRose = new GildedRose(overdueFooItem, overdueBarItem);
 
         // when
         gildedRose.updateQuality();

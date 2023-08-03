@@ -35,3 +35,4 @@ Ideal would be `item.tryIncreaseQuality()`, but rules said that `Item` class can
 #### Second refactoring round:
 * Create method to identify an item category (e.g., `private boolean isAgedItem(Item item) {}`).
 Once again, it is not ideal, and it shouldn't be a `GildedRose` class responsibility to perform those verifications.
+* Use `varargs` param instead.

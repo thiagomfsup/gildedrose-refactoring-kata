@@ -13,7 +13,7 @@ public class AgedItemTest {
 
         // given
         var agedBrieItem = new Item("Aged Brie", 5, initialQuality);
-        GildedRose gildedRose = new GildedRose(new Item[]{agedBrieItem});
+        GildedRose gildedRose = new GildedRose(agedBrieItem);
 
         // when
         gildedRose.updateQuality();
@@ -28,7 +28,7 @@ public class AgedItemTest {
 
         // given
         var overdueAgedBrieItem = new Item("Aged Brie", -1, initialQuality);
-        GildedRose gildedRose = new GildedRose(new Item[]{overdueAgedBrieItem});
+        GildedRose gildedRose = new GildedRose(overdueAgedBrieItem);
 
         // when
         gildedRose.updateQuality();

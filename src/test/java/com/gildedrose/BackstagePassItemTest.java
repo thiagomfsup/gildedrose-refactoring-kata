@@ -16,7 +16,7 @@ public class BackstagePassItemTest {
 
         // given
         var backstatePassItem = new Item("Backstage passes to a TAFKAL80ETC concert", sellInGreaterThanTen, initialQuality);
-        GildedRose gildedRose = new GildedRose(new Item[]{backstatePassItem});
+        GildedRose gildedRose = new GildedRose(backstatePassItem);
 
         // when
         gildedRose.updateQuality();
@@ -114,7 +114,7 @@ public class BackstagePassItemTest {
 
         // given
         Item backstagePassItem = new Item("Backstage passes to a TAFKAL80ETC concert", sellInDate, initialQuality);
-        GildedRose gildedRose = new GildedRose(new Item[]{backstagePassItem});
+        GildedRose gildedRose = new GildedRose(backstagePassItem);
 
         // when
         gildedRose.updateQuality();

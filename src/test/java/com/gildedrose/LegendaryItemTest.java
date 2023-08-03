@@ -18,7 +18,7 @@ public class LegendaryItemTest {
         // given
         final Item legendaryPositiveSellInItem = new Item("Sulfuras, Hand of Ragnaros", POSITIVE_SELLIN, LEGENDARY_QUALITY);
         final Item legendaryOverdueItem = new Item("Sulfuras, Hand of Ragnaros", OVERDUE_SELLIN, LEGENDARY_QUALITY);
-        GildedRose gildedRose = new GildedRose(new Item[]{legendaryPositiveSellInItem, legendaryOverdueItem});
+        GildedRose gildedRose = new GildedRose(legendaryPositiveSellInItem, legendaryOverdueItem);
 
         // when
         updateQualityForDays(gildedRose, TEN_DAYS);
@@ -32,7 +32,7 @@ public class LegendaryItemTest {
         // given
         final Item legendaryPositiveSellInItem = new Item("Sulfuras, Hand of Ragnaros", POSITIVE_SELLIN, LEGENDARY_QUALITY);
         final Item legendaryOverdueItem = new Item("Sulfuras, Hand of Ragnaros", OVERDUE_SELLIN, LEGENDARY_QUALITY);
-        GildedRose gildedRose = new GildedRose(new Item[]{legendaryPositiveSellInItem, legendaryOverdueItem});
+        GildedRose gildedRose = new GildedRose(legendaryPositiveSellInItem, legendaryOverdueItem);
 
         // when
         updateQualityForDays(gildedRose, TEN_DAYS);
