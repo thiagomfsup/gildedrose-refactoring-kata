@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BackstagePassItemTest {
     @Test
-    public void increaseQualityWhenSellInGreaterThanTenApproaches() {
+    public void increaseQualityWhenSellInGreaterThanTenDaysApproach() {
         final int initialQuality = 6;
         final int expectedFinalQuality = 7;
         final int sellInGreaterThanTen = 15;
@@ -47,9 +47,49 @@ public class BackstagePassItemTest {
     }
 
     @Test
+    public void increaseQualityByTwoWhenSellInBetween6And10Days_KeepingMaxQualityLimit() {
+        final int initialQuality = 48;
+        final int expectedFinalQuality = 50;
+
+        // given
+        final Item[] backstagePassItems = IntStream.rangeClosed(6, 10)
+            .mapToObj(sellIn -> new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, initialQuality))
+            .toArray(Item[]::new);
+        GildedRose gildedRose = new GildedRose(backstagePassItems);
+
+        // when
+        gildedRose.updateQuality();
+
+        // then
+        for(Item item : gildedRose.items) {
+            assertThat(item.quality, is(expectedFinalQuality));
+        }
+    }
+
+    @Test
     public void increaseQualityByThreeWhenSellInBetween1And5Days() {
         final int initialQuality = 6;
         final int expectedFinalQuality = 9;
+
+        // given
+        final Item[] backstagePassItems = IntStream.rangeClosed(1, 5)
+            .mapToObj(sellIn -> new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, initialQuality))
+            .toArray(Item[]::new);
+        GildedRose gildedRose = new GildedRose(backstagePassItems);
+
+        // when
+        gildedRose.updateQuality();
+
+        // then
+        for(Item item : gildedRose.items) {
+            assertThat(item.quality, is(expectedFinalQuality));
+        }
+    }
+
+    @Test
+    public void increaseQualityByThreeWhenSellInBetween1And5Days_KeepingMaxQualityLimit() {
+        final int initialQuality = 48;
+        final int expectedFinalQuality = 50;
 
         // given
         final Item[] backstagePassItems = IntStream.rangeClosed(1, 5)
