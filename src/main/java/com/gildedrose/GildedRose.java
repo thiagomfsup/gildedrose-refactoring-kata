@@ -9,16 +9,14 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (item.name.equals("Sulfuras, Hand of Ragnaros")) // LEGENDARY ITEM :: never has to be sold or decreases in Quality
+            if (isLegendaryItem(item)) // LEGENDARY ITEM :: never has to be sold or decreases in Quality
                 continue;
 
-            if (!item.name.equals("Aged Brie") && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                tryDecreaseItemQuality(item);
-            } else {
+            if (isAgedItem(item) || isBackstagePassItem(item)) {
                 // AGED or BACKSTAGE ITEM
                 tryIncreaseItemQuality(item);
 
-                if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                if (isBackstagePassItem(item)) {
                     if (item.sellIn < 11) {
                         tryIncreaseItemQuality(item);
                     }
@@ -27,22 +25,35 @@ class GildedRose {
                         tryIncreaseItemQuality(item);
                     }
                 }
+            } else {
+                tryDecreaseItemQuality(item);
             }
 
             item.sellIn = item.sellIn - 1;
 
             if (item.sellIn < 0) {
-                if (!item.name.equals("Aged Brie")) {
-                    if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                if (isAgedItem(item)) {
+                    tryIncreaseItemQuality(item);
+                } else {
+                    if (!isBackstagePassItem(item)) {
                         tryDecreaseItemQuality(item);
                     } else {
                         item.quality = 0;
                     }
-                } else {
-                    tryIncreaseItemQuality(item);
                 }
             }
         }
+    }
+
+    private boolean isBackstagePassItem(Item item) {
+        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    private boolean isAgedItem(Item item) {
+        return item.name.equals("Aged Brie");
+    }
+    private boolean isLegendaryItem(Item item) {
+        return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
     // TODO should be an item method

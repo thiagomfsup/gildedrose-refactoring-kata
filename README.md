@@ -21,8 +21,8 @@ Since it is 100% covered by unit tests, it is time to "refactor" it!
 * Even though code coverage was 100%, there were corner cases that wasn't tested, which make me doubt about test coverage.
 
 #### First refactoring round:
-* use *enhanced for* statement instead;
-* give duplicated code a concept name. E.g.,
+* Use *enhanced for* statement instead;
+* Give duplicated code a concept name. E.g.,
 ```java
   // Instead of :
   if (items[i].quality < 50) {
@@ -32,3 +32,6 @@ Since it is 100% covered by unit tests, it is time to "refactor" it!
   tryIncreaseItemQuality(Item item)
 ```
 Ideal would be `item.tryIncreaseQuality()`, but rules said that `Item` class cannot be changed.
+#### Second refactoring round:
+* Create method to identify an item category (e.g., `private boolean isAgedItem(Item item) {}`).
+Once again, it is not ideal, and it shouldn't be a `GildedRose` class responsibility to perform those verifications.
