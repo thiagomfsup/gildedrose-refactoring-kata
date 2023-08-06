@@ -24,15 +24,39 @@ Since it is 100% covered by unit tests, it is time to "refactor" it!
 * Use *enhanced for* statement instead;
 * Give duplicated code a concept name. E.g.,
 ```java
-  // Instead of :
-  if (items[i].quality < 50) {
-    items[i].quality = items[i].quality + 1;
-  }
-  // Use :
-  tryIncreaseItemQuality(Item item)
+// Instead of :
+if (items[i].quality < 50) {
+   items[i].quality = items[i].quality + 1;
+}
+
+// Use :
+tryIncreaseItemQuality(Item item)
 ```
 Ideal would be `item.tryIncreaseQuality()`, but rules said that `Item` class cannot be changed.
 #### Second refactoring round:
 * Create method to identify an item category (e.g., `private boolean isAgedItem(Item item) {}`).
 Once again, it is not ideal, and it shouldn't be a `GildedRose` class responsibility to perform those verifications.
 * Use `varargs` param instead.
+
+### 3rd Iteration
+**Goals**:: refactoring the entire solution
+
+Huge change introduced to the solution in this iteration, but keeping the goblin satisfied. Leeroy wouldn't recognize it
+and probably would think that it has been entirely rewritten 😅 Anyway...
+
+To keep constraint on changing `Item` class, the `EnhanceItem` class has been introduced. Basically, it encapsulates an
+`Item` object together with a `ItemUpdateStrategy` interface. As it can be derived from this class name, the *Strategy*
+pattern has been used, which allow defining the behavior expected when updating item quality.
+
+To avoid unnecessary object instantiation, the *Singleton* pattern has been used on each class that implements the
+`ItemUpdateStrategy` interface.
+
+Although applying the *Strategy* pattern seemed to be a good idea, it doesn't solved all the problems. For example, it
+is not possible to know to which category an `EnhanceItem` object belongs to. The following test snippet code shows this
+limitation:
+```java
+// given NON Legendary items
+gildedRose.items = Arrays.stream(gildedRose.items)
+   .filter(item -> !"Sulfuras, Hand of Ragnaros".equals(item.getName()))
+   .toArray(EnhancedItem[]::new);
+```

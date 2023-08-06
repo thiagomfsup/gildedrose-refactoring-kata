@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.item.EnhancedItem;
+import com.gildedrose.item.strategy.AgedItemUpdateStrategy;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,13 +14,13 @@ public class AgedItemTest {
         final int expectedFinalQuality = 7;
 
         // given
-        var agedBrieItem = new Item("Aged Brie", 5, initialQuality);
+        var agedBrieItem = new EnhancedItem("Aged Brie", 5, initialQuality, AgedItemUpdateStrategy.getInstance());
         GildedRose gildedRose = new GildedRose(agedBrieItem);
 
         // when
         gildedRose.updateQuality();
 
-        assertThat(agedBrieItem.quality, is(expectedFinalQuality));
+        assertThat(agedBrieItem.getQuality(), is(expectedFinalQuality));
     }
 
     @Test
@@ -27,14 +29,30 @@ public class AgedItemTest {
         final int expectedFinalQuality = 8;
 
         // given
-        var overdueAgedBrieItem = new Item("Aged Brie", -1, initialQuality);
+        var overdueAgedBrieItem = new EnhancedItem("Aged Brie", -1, initialQuality, AgedItemUpdateStrategy.getInstance());
         GildedRose gildedRose = new GildedRose(overdueAgedBrieItem);
 
         // when
         gildedRose.updateQuality();
 
         // then
-        assertThat(overdueAgedBrieItem.quality, is(expectedFinalQuality));
+        assertThat(overdueAgedBrieItem.getQuality(), is(expectedFinalQuality));
+    }
+
+    @Test
+    public void increaseQualityTwiceAsFastWhenOverdueKeepingMaxQuality() {
+        final int initialQuality = 49;
+        final int expectedFinalQuality = 50;
+
+        // given
+        var overdueAgedBrieItem = new EnhancedItem("Aged Brie", -1, initialQuality, AgedItemUpdateStrategy.getInstance());
+        GildedRose gildedRose = new GildedRose(overdueAgedBrieItem);
+
+        // when
+        gildedRose.updateQuality();
+
+        // then
+        assertThat(overdueAgedBrieItem.getQuality(), is(expectedFinalQuality));
     }
 }
 

@@ -1,5 +1,10 @@
 package com.gildedrose;
 
+import com.gildedrose.item.EnhancedItem;
+import com.gildedrose.item.strategy.AgedItemUpdateStrategy;
+import com.gildedrose.item.strategy.BackstagePassItemUpdateStrategy;
+import com.gildedrose.item.strategy.LegendaryItemUpdateStrategy;
+import com.gildedrose.item.strategy.NormalItemUpdateStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,17 +24,17 @@ class GildedRoseTest {
     public void setUp() {
         // given
         gildedRose = new GildedRose(
-            new Item("+5 Dexterity Vest", 10, 20),
-            new Item("Aged Brie", 2, 0),
-            new Item("Aged Brie", 2, 49),
-            new Item("Elixir of the Mongoose", 5, 7),
-            new Item("Sulfuras, Hand of Ragnaros", 0, 80),
-            new Item("Sulfuras, Hand of Ragnaros", -1, 80),
-            new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-            new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
-            new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+            new EnhancedItem("+5 Dexterity Vest", 10, 20, NormalItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Aged Brie", 2, 0, AgedItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Aged Brie", 2, 49, AgedItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Elixir of the Mongoose", 5, 7, NormalItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Sulfuras, Hand of Ragnaros", 0, 80, LegendaryItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Sulfuras, Hand of Ragnaros", -1, 80, LegendaryItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", 15, 20, BackstagePassItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", 10, 49, BackstagePassItemUpdateStrategy.getInstance()),
+            new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", 5, 49, BackstagePassItemUpdateStrategy.getInstance()),
             // this conjured item does not work properly yet
-            new Item("Conjured Mana Cake", 3, 6));
+            new EnhancedItem("Conjured Mana Cake", 3, 6, NormalItemUpdateStrategy.getInstance()));
     }
 
     @Test
@@ -38,8 +43,8 @@ class GildedRoseTest {
         updateQualityForDays(gildedRose, TEN_DAYS);
 
         // then
-        for (Item item : gildedRose.items) {
-            assertThat(item.quality, greaterThanOrEqualTo(0));
+        for (EnhancedItem item : gildedRose.items) {
+            assertThat(item.getQuality(), greaterThanOrEqualTo(0));
         }
     }
 
@@ -47,15 +52,15 @@ class GildedRoseTest {
     public void qualityShouldNeverBeGreaterThanFifty() {
         // given NON Legendary items
         gildedRose.items = Arrays.stream(gildedRose.items)
-            .filter(item -> !"Sulfuras, Hand of Ragnaros".equals(item.name))
-            .toArray(Item[]::new);
+            .filter(item -> !"Sulfuras, Hand of Ragnaros".equals(item.getName())) // TODO How to do it another way?
+            .toArray(EnhancedItem[]::new);
 
         // when
         updateQualityForDays(gildedRose, TEN_DAYS);
 
         // then
-        for (Item item : gildedRose.items) {
-            assertThat(item.quality, lessThanOrEqualTo(50));
+        for (EnhancedItem item : gildedRose.items) {
+            assertThat(item.getQuality(), lessThanOrEqualTo(50));
         }
     }
 

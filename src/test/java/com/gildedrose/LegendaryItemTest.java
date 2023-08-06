@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.item.EnhancedItem;
+import com.gildedrose.item.strategy.LegendaryItemUpdateStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,29 +18,35 @@ public class LegendaryItemTest {
     @Test
     public void hasNeverToBeSold() {
         // given
-        final Item legendaryPositiveSellInItem = new Item("Sulfuras, Hand of Ragnaros", POSITIVE_SELLIN, LEGENDARY_QUALITY);
-        final Item legendaryOverdueItem = new Item("Sulfuras, Hand of Ragnaros", OVERDUE_SELLIN, LEGENDARY_QUALITY);
+        final EnhancedItem legendaryPositiveSellInItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
+            POSITIVE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
+
+        final EnhancedItem legendaryOverdueItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
+            OVERDUE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
         GildedRose gildedRose = new GildedRose(legendaryPositiveSellInItem, legendaryOverdueItem);
 
         // when
         updateQualityForDays(gildedRose, TEN_DAYS);
 
-        assertThat(legendaryPositiveSellInItem.sellIn, is(POSITIVE_SELLIN));
-        assertThat(legendaryOverdueItem.sellIn, is(OVERDUE_SELLIN));
+        assertThat(legendaryPositiveSellInItem.getSellIn(), is(POSITIVE_SELLIN));
+        assertThat(legendaryOverdueItem.getSellIn(), is(OVERDUE_SELLIN));
     }
 
     @Test
     public void legendaryQualityNeverChange() {
         // given
-        final Item legendaryPositiveSellInItem = new Item("Sulfuras, Hand of Ragnaros", POSITIVE_SELLIN, LEGENDARY_QUALITY);
-        final Item legendaryOverdueItem = new Item("Sulfuras, Hand of Ragnaros", OVERDUE_SELLIN, LEGENDARY_QUALITY);
+        final EnhancedItem legendaryPositiveSellInItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
+            POSITIVE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
+
+        final EnhancedItem legendaryOverdueItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
+            OVERDUE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
         GildedRose gildedRose = new GildedRose(legendaryPositiveSellInItem, legendaryOverdueItem);
 
         // when
         updateQualityForDays(gildedRose, TEN_DAYS);
 
-        assertThat(legendaryPositiveSellInItem.quality, is(LEGENDARY_QUALITY));
-        assertThat(legendaryOverdueItem.quality, is(LEGENDARY_QUALITY));
+        assertThat(legendaryPositiveSellInItem.getQuality(), is(LEGENDARY_QUALITY));
+        assertThat(legendaryOverdueItem.getQuality(), is(LEGENDARY_QUALITY));
     }
 
     private void updateQualityForDays(final GildedRose gildedRose, int days) {
