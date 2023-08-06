@@ -82,3 +82,9 @@ gildedRose.items = Arrays.stream(gildedRose.items)
 Since `ItemCategory` has an `ItemUpdateStrategy` object aggregated, introducing a new category will cause (most likely)
 a strategy for update to be created as well. Seems that it's not an issue for this problem domain, but it doesn't smell
 good...
+
+### 4th Iteration
+**Goals**:: introduce support to "Conjured" items.
+
+The "CONJURED" category has been created, so was the `ConjuredItemUpdateStrategy` class. Unit tests for Conjured items
+was added as well.

@@ -21,8 +21,8 @@ public class TexttestFixture {
             new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", 15, 20, ItemCategory.BACKSTAGE_PASS),
             new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", 10, 49, ItemCategory.BACKSTAGE_PASS),
             new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", 5, 49, ItemCategory.BACKSTAGE_PASS),
-            // this conjured item does not work properly yet
-            new EnhancedItem("Conjured Mana Cake", 3, 6, ItemCategory.NORMAL) };
+            new EnhancedItem("Conjured Mana Cake", 3, 6, ItemCategory.CONJURED),
+            new EnhancedItem("Conjured Mana Cake", 3, 18, ItemCategory.CONJURED)};
 
         GildedRose app = new GildedRose(items);
 
