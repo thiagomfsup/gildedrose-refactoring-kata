@@ -1,7 +1,7 @@
 package com.gildedrose;
 
 import com.gildedrose.item.EnhancedItem;
-import com.gildedrose.item.strategy.BackstagePassItemUpdateStrategy;
+import com.gildedrose.item.ItemCategory;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
@@ -18,7 +18,7 @@ public class BackstagePassItemTest {
 
         // given
         var backstatePassItem = new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellInGreaterThanTen,
-            initialQuality, BackstagePassItemUpdateStrategy.getInstance());
+            initialQuality, ItemCategory.BACKSTAGE_PASS);
         GildedRose gildedRose = new GildedRose(backstatePassItem);
 
         // when
@@ -37,7 +37,7 @@ public class BackstagePassItemTest {
         // given
         final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(6, 10)
             .mapToObj(sellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellIn,
-                initialQuality, BackstagePassItemUpdateStrategy.getInstance()))
+                initialQuality, ItemCategory.BACKSTAGE_PASS))
             .toArray(EnhancedItem[]::new);
         GildedRose gildedRose = new GildedRose(backstagePassItems);
 
@@ -58,7 +58,7 @@ public class BackstagePassItemTest {
         // given
         final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(6, 10)
             .mapToObj(sellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellIn,
-                initialQuality, BackstagePassItemUpdateStrategy.getInstance()))
+                initialQuality, ItemCategory.BACKSTAGE_PASS))
             .toArray(EnhancedItem[]::new);
         GildedRose gildedRose = new GildedRose(backstagePassItems);
 
@@ -79,7 +79,7 @@ public class BackstagePassItemTest {
         // given
         final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(1, 5)
             .mapToObj(sellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellIn,
-                initialQuality, BackstagePassItemUpdateStrategy.getInstance()))
+                initialQuality, ItemCategory.BACKSTAGE_PASS))
             .toArray(EnhancedItem[]::new);
         GildedRose gildedRose = new GildedRose(backstagePassItems);
 
@@ -100,7 +100,7 @@ public class BackstagePassItemTest {
         // given
         final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(1, 5)
             .mapToObj(sellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellIn,
-                initialQuality, BackstagePassItemUpdateStrategy.getInstance()))
+                initialQuality, ItemCategory.BACKSTAGE_PASS))
             .toArray(EnhancedItem[]::new);
         GildedRose gildedRose = new GildedRose(backstagePassItems);
 
@@ -121,7 +121,7 @@ public class BackstagePassItemTest {
 
         // given
         EnhancedItem backstagePassItem = new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellInDate,
-            initialQuality, BackstagePassItemUpdateStrategy.getInstance());
+            initialQuality, ItemCategory.BACKSTAGE_PASS);
         GildedRose gildedRose = new GildedRose(backstagePassItem);
 
         // when

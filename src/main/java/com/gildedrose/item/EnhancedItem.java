@@ -1,24 +1,23 @@
 package com.gildedrose.item;
 
 import com.gildedrose.Item;
-import com.gildedrose.item.strategy.ItemUpdateStrategy;
 
 public class EnhancedItem {
     private Item item;
 
-    private ItemUpdateStrategy strategy;
+    private ItemCategory category;
 
-    public EnhancedItem(Item item, ItemUpdateStrategy strategy) {
+    public EnhancedItem(Item item, ItemCategory category) {
         this.item = item;
-        this.strategy = strategy;
+        this.category = category;
     }
 
-    public EnhancedItem(String name, int sellIn, int quality, ItemUpdateStrategy strategy) {
-        this(new Item(name, sellIn, quality), strategy);
+    public EnhancedItem(String name, int sellIn, int quality, ItemCategory category) {
+        this(new Item(name, sellIn, quality), category);
     }
 
     public void updateQuality() {
-        strategy.updateItem(this);
+        category.getUpdateStrategy().updateItem(this);
     }
 
     // TODO public?
@@ -58,6 +57,10 @@ public class EnhancedItem {
 
     public String getName() {
         return item.name;
+    }
+
+    public ItemCategory getCategory() {
+        return category;
     }
 
     @Override

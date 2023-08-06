@@ -1,7 +1,7 @@
 package com.gildedrose;
 
 import com.gildedrose.item.EnhancedItem;
-import com.gildedrose.item.strategy.AgedItemUpdateStrategy;
+import com.gildedrose.item.ItemCategory;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,7 +14,7 @@ public class AgedItemTest {
         final int expectedFinalQuality = 7;
 
         // given
-        var agedBrieItem = new EnhancedItem("Aged Brie", 5, initialQuality, AgedItemUpdateStrategy.getInstance());
+        var agedBrieItem = new EnhancedItem("Aged Brie", 5, initialQuality, ItemCategory.AGED);
         GildedRose gildedRose = new GildedRose(agedBrieItem);
 
         // when
@@ -29,7 +29,7 @@ public class AgedItemTest {
         final int expectedFinalQuality = 8;
 
         // given
-        var overdueAgedBrieItem = new EnhancedItem("Aged Brie", -1, initialQuality, AgedItemUpdateStrategy.getInstance());
+        var overdueAgedBrieItem = new EnhancedItem("Aged Brie", -1, initialQuality, ItemCategory.AGED);
         GildedRose gildedRose = new GildedRose(overdueAgedBrieItem);
 
         // when
@@ -45,7 +45,7 @@ public class AgedItemTest {
         final int expectedFinalQuality = 50;
 
         // given
-        var overdueAgedBrieItem = new EnhancedItem("Aged Brie", -1, initialQuality, AgedItemUpdateStrategy.getInstance());
+        var overdueAgedBrieItem = new EnhancedItem("Aged Brie", -1, initialQuality, ItemCategory.AGED);
         GildedRose gildedRose = new GildedRose(overdueAgedBrieItem);
 
         // when

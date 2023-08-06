@@ -1,8 +1,7 @@
 package com.gildedrose;
 
 import com.gildedrose.item.EnhancedItem;
-import com.gildedrose.item.strategy.LegendaryItemUpdateStrategy;
-import org.junit.jupiter.api.BeforeEach;
+import com.gildedrose.item.ItemCategory;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,10 +18,10 @@ public class LegendaryItemTest {
     public void hasNeverToBeSold() {
         // given
         final EnhancedItem legendaryPositiveSellInItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
-            POSITIVE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
+            POSITIVE_SELLIN, LEGENDARY_QUALITY, ItemCategory.LEGENDARY);
 
         final EnhancedItem legendaryOverdueItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
-            OVERDUE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
+            OVERDUE_SELLIN, LEGENDARY_QUALITY, ItemCategory.LEGENDARY);
         GildedRose gildedRose = new GildedRose(legendaryPositiveSellInItem, legendaryOverdueItem);
 
         // when
@@ -36,10 +35,10 @@ public class LegendaryItemTest {
     public void legendaryQualityNeverChange() {
         // given
         final EnhancedItem legendaryPositiveSellInItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
-            POSITIVE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
+            POSITIVE_SELLIN, LEGENDARY_QUALITY, ItemCategory.LEGENDARY);
 
         final EnhancedItem legendaryOverdueItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
-            OVERDUE_SELLIN, LEGENDARY_QUALITY, LegendaryItemUpdateStrategy.getInstance());
+            OVERDUE_SELLIN, LEGENDARY_QUALITY, ItemCategory.LEGENDARY);
         GildedRose gildedRose = new GildedRose(legendaryPositiveSellInItem, legendaryOverdueItem);
 
         // when
