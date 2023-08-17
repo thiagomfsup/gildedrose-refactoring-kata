@@ -86,5 +86,48 @@ good...
 ### 4th Iteration
 **Goals**:: introduce support to "Conjured" items.
 
-The "CONJURED" category has been created, so was the `ConjuredItemUpdateStrategy` class. Unit tests for Conjured items
+The *CONJURED* category has been created, so was the `ConjuredItemUpdateStrategy` class. Unit tests for Conjured items
 was added as well.
+
+### 5th Iteration
+**Goals**:: fix *TODOs* and poor design decisions.
+
+Now that "domain concepts" have been introduced (or was it discovered?) and *CONJURED* category is supported, it's
+time to resolve *TODOs* and poor design decision made along the way. In other words, it's time to pay for tech debts.
+
+`EnhancedItem` class has been introduced to "keep the goblin in the corner satisfied". However, this class is allowing
+*anyone* to invoke `dropQualityToZero()`, `decreaseSellIn()`, `tryIncreaseQuality()`,
+and `tryDecreaseQuality()`, which means that an `EnhancedItem` object state can be modified at any time and context.
+
+This problem doesn't come from the adoption of the *Strategy* pattern, but how it was implemented: `UpdateStrategy`
+interface implementors are given an `EnhancedItem` object and nothing more. But before deep-diving into solving this
+problem, it should be noticed how strategy was implemented. Basically, all implementors:
+
+1. apply quality update logic (i.e., decrease or increase quality) **before** decreasing `sellIn` value;
+2. decreases `sellIn` value (if allowed);
+3. applies quality update logic (i.e., decrease or increase quality) **if** sell date has passed (i.e., `sellIn` < 0).
+
+This sequence was derived from the initial GildedRose version. Quality update logic was _break_ in two parts in that
+implementation, but it is not necessary at all. It can be simplified to the following sequence:
+
+1. decreases `sellIn` value (if allowed);
+2. update quality, decreasing or increasing it by _a delta factor_.
+
+The `EnhancedItem.updateQuality()` method implements that sequence as shown below:
+```java
+public void updateQuality() {
+    final var itemUpdateStrategy = category.getUpdateStrategy();
+
+    if (itemUpdateStrategy.allowChangingSellDate())
+    decreaseSellIn();
+
+    tryUpdateQuality(itemUpdateStrategy.calculateQualityDelta(this));
+}
+```
+
+The `EnhancedItem.tryUpdateQuality()` private method receives a _delta_ value that should be incremented to an item
+quality value. Note that _delta_ value can be negative, meaning that quality value should decrease.
+
+Consequently, `EnhancedItem`'s `tryIncreaseQuality()`, `dropQualityToZero()`, and `tryDecreaseQuality()` methods were
+deleted in favor of the `tryUpdateQuality()` method, which is responsible to update quality value while preserving
+constraints. `decreaseSellIn()` method was made private.

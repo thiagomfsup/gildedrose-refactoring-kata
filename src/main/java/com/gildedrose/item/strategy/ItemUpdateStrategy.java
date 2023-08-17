@@ -4,5 +4,9 @@ import com.gildedrose.item.EnhancedItem;
 
 public interface ItemUpdateStrategy {
 
-    void updateItem(EnhancedItem item);
+    int calculateQualityDelta(EnhancedItem item);
+
+    default boolean allowChangingSellDate() {
+        return true;
+    }
 }

@@ -3,6 +3,7 @@ package com.gildedrose.item;
 import com.gildedrose.Item;
 
 public class EnhancedItem {
+    private static final int MAX_QUALITY_VALUE = 50;
     private Item item;
 
     private ItemCategory category;
@@ -17,29 +18,30 @@ public class EnhancedItem {
     }
 
     public void updateQuality() {
-        category.getUpdateStrategy().updateItem(this);
+        final var itemUpdateStrategy = category.getUpdateStrategy();
+
+        if (itemUpdateStrategy.allowChangingSellDate())
+            decreaseSellIn();
+
+        tryUpdateQuality(itemUpdateStrategy.calculateQualityDelta(this));
     }
 
-    // TODO public?
-    public void tryDecreaseQuality() {
-        if (item.quality > 0) {
-            item.quality = item.quality - 1;
+    private void tryUpdateQuality(int delta) {
+        if (delta == 0)
+            return; // nothing to change
+
+        final int tempQuality = item.quality + delta;
+
+        if (tempQuality < 0) {
+            item.quality = 0;
+        } else if(tempQuality > MAX_QUALITY_VALUE) {
+            item.quality = MAX_QUALITY_VALUE;
+        } else {
+            item.quality = tempQuality;
         }
     }
 
-    // TODO public?
-    public void tryIncreaseQuality() {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1;
-        }
-    }
-
-    // TODO probably can be made another way
-    public void dropQualityToZero() {
-        item.quality = 0;
-    }
-
-    public void decreaseSellIn() {
+    private void decreaseSellIn() {
         item.sellIn = item.sellIn - 1;
     }
 

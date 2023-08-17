@@ -15,7 +15,7 @@ public class LegendaryItemTest {
     private static final int LEGENDARY_QUALITY = 80;
 
     @Test
-    public void hasNeverToBeSold() {
+    public void shouldNeverBeSold() {
         // given
         final EnhancedItem legendaryPositiveSellInItem = new EnhancedItem("Sulfuras, Hand of Ragnaros",
             POSITIVE_SELLIN, LEGENDARY_QUALITY, ItemCategory.LEGENDARY);

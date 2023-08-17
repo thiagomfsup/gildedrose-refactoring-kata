@@ -2,7 +2,7 @@ package com.gildedrose.item.strategy;
 
 import com.gildedrose.item.EnhancedItem;
 
-public class AgedItemUpdateStrategy implements ItemUpdateStrategy {
+public final class AgedItemUpdateStrategy implements ItemUpdateStrategy {
 
     private final static AgedItemUpdateStrategy SINGLETON = new AgedItemUpdateStrategy();
 
@@ -10,14 +10,8 @@ public class AgedItemUpdateStrategy implements ItemUpdateStrategy {
     }
 
     @Override
-    public void updateItem(EnhancedItem item) {
-        item.tryIncreaseQuality();
-
-        item.decreaseSellIn();
-
-        if (item.hasSellDatePassed()) {
-            item.tryIncreaseQuality();
-        }
+    public int calculateQualityDelta(EnhancedItem item) {
+        return item.hasSellDatePassed() ? 2 : 1;
     }
 
     public static AgedItemUpdateStrategy getInstance() {

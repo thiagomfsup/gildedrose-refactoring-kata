@@ -30,13 +30,13 @@ public class BackstagePassItemTest {
     }
 
     @Test
-    public void increaseQualityByTwoWhenSellInBetween6And10Days() {
+    public void increaseQualityByTwoWhenFinalSellInBetween6And10Days() {
         final int initialQuality = 6;
         final int expectedFinalQuality = 8;
 
         // given
-        final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(6, 10)
-            .mapToObj(sellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellIn,
+        final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(7, 11)
+            .mapToObj(initialSellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", initialSellIn,
                 initialQuality, ItemCategory.BACKSTAGE_PASS))
             .toArray(EnhancedItem[]::new);
         GildedRose gildedRose = new GildedRose(backstagePassItems);
@@ -72,13 +72,13 @@ public class BackstagePassItemTest {
     }
 
     @Test
-    public void increaseQualityByThreeWhenSellInBetween1And5Days() {
+    public void increaseQualityByThreeWhenFinalSellInBetween1And5Days() {
         final int initialQuality = 6;
         final int expectedFinalQuality = 9;
 
         // given
-        final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(1, 5)
-            .mapToObj(sellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", sellIn,
+        final EnhancedItem[] backstagePassItems = IntStream.rangeClosed(1, 6)
+            .mapToObj(initialSellIn -> new EnhancedItem("Backstage passes to a TAFKAL80ETC concert", initialSellIn,
                 initialQuality, ItemCategory.BACKSTAGE_PASS))
             .toArray(EnhancedItem[]::new);
         GildedRose gildedRose = new GildedRose(backstagePassItems);

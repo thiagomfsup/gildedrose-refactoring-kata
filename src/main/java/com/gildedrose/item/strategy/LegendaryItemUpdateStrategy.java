@@ -2,7 +2,7 @@ package com.gildedrose.item.strategy;
 
 import com.gildedrose.item.EnhancedItem;
 
-public class LegendaryItemUpdateStrategy implements ItemUpdateStrategy {
+public final class LegendaryItemUpdateStrategy implements ItemUpdateStrategy {
     private static final LegendaryItemUpdateStrategy SINGLETON = new LegendaryItemUpdateStrategy();
 
     private LegendaryItemUpdateStrategy() {
@@ -13,7 +13,12 @@ public class LegendaryItemUpdateStrategy implements ItemUpdateStrategy {
     }
 
     @Override
-    public void updateItem(EnhancedItem item) {
-        // NO-OP
+    public int calculateQualityDelta(EnhancedItem enhancedItem) {
+        return 0;
+    }
+
+    @Override
+    public boolean allowChangingSellDate() {
+        return false;
     }
 }

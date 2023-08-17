@@ -2,7 +2,7 @@ package com.gildedrose.item.strategy;
 
 import com.gildedrose.item.EnhancedItem;
 
-public class BackstagePassItemUpdateStrategy implements ItemUpdateStrategy {
+public final class BackstagePassItemUpdateStrategy implements ItemUpdateStrategy {
     private static final BackstagePassItemUpdateStrategy SINGLETON = new BackstagePassItemUpdateStrategy();
 
     private BackstagePassItemUpdateStrategy() {}
@@ -12,21 +12,20 @@ public class BackstagePassItemUpdateStrategy implements ItemUpdateStrategy {
     }
 
     @Override
-    public void updateItem(EnhancedItem item) {
-        item.tryIncreaseQuality();
+    public int calculateQualityDelta(EnhancedItem item) {
+        if (item.hasSellDatePassed())
+            return (-1) * item.getQuality(); // drop quality to zero
 
-        if (item.getSellIn() < 11) { // TODO a new EnhancedItem concept?
-            item.tryIncreaseQuality();
+        int delta = 1;
+
+        if (item.getSellIn() < 11) {
+            delta++;
         }
 
         if (item.getSellIn() < 6) {
-            item.tryIncreaseQuality();
+            delta++;
         }
 
-        item.decreaseSellIn();
-
-        if (item.hasSellDatePassed()) {
-            item.dropQualityToZero();
-        }
+        return delta;
     }
 }

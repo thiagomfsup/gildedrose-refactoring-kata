@@ -2,9 +2,11 @@ package com.gildedrose.item.strategy;
 
 import com.gildedrose.item.EnhancedItem;
 
-public class NormalItemUpdateStrategy implements ItemUpdateStrategy {
+public final class NormalItemUpdateStrategy implements ItemUpdateStrategy {
 
     private static final NormalItemUpdateStrategy SINGLETON = new NormalItemUpdateStrategy();
+
+    private static final int DEFAULT_DELTA = -1;
 
     private NormalItemUpdateStrategy() {
     }
@@ -14,13 +16,10 @@ public class NormalItemUpdateStrategy implements ItemUpdateStrategy {
     }
 
     @Override
-    public void updateItem(EnhancedItem item) {
-        item.tryDecreaseQuality();
+    public int calculateQualityDelta(EnhancedItem item) {
+        if (item.hasSellDatePassed())
+            return DEFAULT_DELTA * 2;
 
-        item.decreaseSellIn();
-
-        if (item.hasSellDatePassed()) {
-            item.tryDecreaseQuality();
-        }
+        return DEFAULT_DELTA;
     }
 }

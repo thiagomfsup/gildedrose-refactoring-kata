@@ -6,6 +6,8 @@ public class ConjuredItemUpdateStrategy implements ItemUpdateStrategy {
 
     private static final ConjuredItemUpdateStrategy SINGLETON = new ConjuredItemUpdateStrategy();
 
+    private static final int DEFAULT_DELTA = -2;
+
     private ConjuredItemUpdateStrategy() {
     }
 
@@ -14,15 +16,10 @@ public class ConjuredItemUpdateStrategy implements ItemUpdateStrategy {
     }
 
     @Override
-    public void updateItem(EnhancedItem item) {
-        item.tryDecreaseQuality();
-        item.tryDecreaseQuality(); // TODO BAD SMELL
+    public int calculateQualityDelta(EnhancedItem item) {
+        if (item.hasSellDatePassed())
+            return DEFAULT_DELTA * 2;
 
-        item.decreaseSellIn();
-
-        if (item.hasSellDatePassed()) {
-            item.tryDecreaseQuality();
-            item.tryDecreaseQuality();
-        }
+        return DEFAULT_DELTA;
     }
 }
